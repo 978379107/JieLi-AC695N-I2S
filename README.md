@@ -21,8 +21,6 @@ typedef struct {
     s16 *dma_adr;     				///< alink dma地址
 } iis_channel;
 
-
-§1.2  相关程序配置说明
 	官方SDK release V0.1.0 中board_ac695x_demo_cfg.h有相关可选配置可直接修改：
 #define AUDIO_OUTPUT_WAY            AUDIO_OUTPUT_WAY_DAC_IIS
 #define TCFG_IIS_ENABLE                       ENABLE_THIS_MOUDLE //
@@ -33,12 +31,9 @@ typedef struct {
 #define TCFG_IIS_OUTPUT_DATAPORT_SEL          (BIT(0))
 	其中程序配置初始化函数由int audio_link_open(u8 alink_port, u8 dir)、int iis_open(iis_param *param)配置并注册回调函数void iis0_cb(u8 ch_idx, void *buf, u32 len)，在audio_link.c文件中可查询。
 注：程序中默认IIS输出使用主机模式，输入使用从模式，需改变按以下步骤。
- 
-图1.2.1
-同时从机模式由外部提供时钟信号，故配置相关IO为输入：
- 
-图1.2.2
 
+同时从机模式由外部提供时钟信号，故配置相关IO为输入
+ 
 其中注册传输数据中断回调函数：
 alink_hdl->param.isr_cbfun = (alink_port < 2) ? iis0_cb : iis1_cb;
 alink中断的回调函数句柄，不用回调函数则写入NULL，如无中断，句柄无效
@@ -57,4 +52,3 @@ typedef struct _cbuffer {
 } cbuffer_t;
 
  
-§1.3 逻辑分析仪输出波形
